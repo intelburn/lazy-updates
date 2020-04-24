@@ -30,10 +30,17 @@ for IPADDR in $(cat results-final); do
         PASSWORD=$(grep $username $CREDS | cut -d, -f2)
         break
     done
+    echo "Does the machine need python2? y/N"
+    read pythonver
     #Make sure that the SSH key is on the VM
     ssh-copy-id $USERNAME@$IPADDR
     #Add the information about the VM to the inventory file
     echo "    $IPADDR:" >> results.yml
     echo "      ansible_user: $USERNAME" >> results.yml
     echo "      ansible_become_password: $PASSWORD" >> results.yml
+    if [ $pythonver == 'y' ] || [ $pythonver == 'Y' ]; then
+	    echo "      ansible_python_interpreter: /usr/bin/python" >> results.yml
+    else
+	    echo "      ansible_python_interpreter: /usr/bin/python3" >> results.yml
+    fi
 done

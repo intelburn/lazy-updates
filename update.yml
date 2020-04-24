@@ -3,12 +3,12 @@
   become: yes
   tasks:
   - name: Install RHEL updates
-    yum:
+    dnf:
       name: '*'
       state: latest
     when: ansible_facts['os_family']|lower == 'redhat'
   - name: Clean up RHEL machines
-    yum:
+    dnf:
       autoremove: yes
     when: ansible_facts['os_family']|lower == 'redhat'
   - name: Run apt update
@@ -27,12 +27,12 @@
   - name: "Reboot VM"
     reboot:
   - name: Install RHEL updates
-    yum:
+    dnf:
       name: '*'
       state: latest
     when: ansible_facts['os_family']|lower == 'redhat'
   - name: Clean up RHEL machines
-    yum:
+    dnf:
       autoremove: yes
     when: ansible_facts['os_family']|lower == 'redhat'
   - name: Run apt update
@@ -50,4 +50,3 @@
     when: ansible_facts['pkg_mgr']|lower == 'apt'
   - name: "Shutdown VM"
     command: poweroff
-  

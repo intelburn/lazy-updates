@@ -1,0 +1,8 @@
+---
+- name: Install RHEL updates
+  dnf:
+    name: '*'
+    state: latest
+- name: Clean up RHEL machines
+  dnf:
+    autoremove: yes

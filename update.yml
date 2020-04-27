@@ -2,51 +2,15 @@
 - hosts: all
   become: yes
   tasks:
-  - name: Install RHEL updates
-    dnf:
-      name: '*'
-      state: latest
+  - include: redhat.yml
     when: ansible_facts['os_family']|lower == 'redhat'
-  - name: Clean up RHEL machines
-    dnf:
-      autoremove: yes
-    when: ansible_facts['os_family']|lower == 'redhat'
-  - name: Run apt update
-    apt:
-      update_cache: yes
-    when: ansible_facts['pkg_mgr']|lower == 'apt'
-  - name: Install Debian Updates
-    apt:
-      upgrade: dist
-    when: ansible_facts['pkg_mgr']|lower == 'apt'
-  - name: Clean Debian machines
-    apt:
-      autoclean: yes
-      autoremove: yes
+  - include: debian.yml
     when: ansible_facts['pkg_mgr']|lower == 'apt'
   - name: "Reboot VM"
     reboot:
-  - name: Install RHEL updates
-    dnf:
-      name: '*'
-      state: latest
+  - include: redhat.yml
     when: ansible_facts['os_family']|lower == 'redhat'
-  - name: Clean up RHEL machines
-    dnf:
-      autoremove: yes
-    when: ansible_facts['os_family']|lower == 'redhat'
-  - name: Run apt update
-    apt:
-      update_cache: yes
-    when: ansible_facts['pkg_mgr']|lower == 'apt'
-  - name: Install Debian Updates
-    apt:
-      upgrade: dist
-    when: ansible_facts['pkg_mgr']|lower == 'apt'
-  - name: Clean Debian machines
-    apt:
-      autoclean: yes
-      autoremove: yes
+  - include: debian.yml
     when: ansible_facts['pkg_mgr']|lower == 'apt'
   - name: "Shutdown VM"
     command: poweroff

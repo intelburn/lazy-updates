@@ -23,7 +23,7 @@ echo "  hosts:" >> results.yml
 #Loop thru the IP addresses
 for IPADDR in $(cat results-final); do
     #Print out the infomration about the host for the user
-    cat results-dirty | grep $IPADDR
+    cat results-dirty | grep -w $IPADDR
     #Ask user for creds base on the creds file
     select username in $(cut -d, -f1 $CREDS); do
         USERNAME=$username
